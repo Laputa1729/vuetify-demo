@@ -38,7 +38,7 @@
         </v-app-bar>-->
 
         <Navbar></Navbar>
-        <v-main>
+        <v-main class="mx-4 mb-4">
             <router-view/>
         </v-main>
     </v-app>
