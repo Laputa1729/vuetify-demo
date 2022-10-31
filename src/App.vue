@@ -1,5 +1,5 @@
 <template>
-    <v-app class="grey lighten-4">
+    <v-app>
         <!--<v-app-bar
             app
             dark
@@ -38,8 +38,11 @@
         </v-app-bar>-->
 
         <Navbar></Navbar>
-        <v-main class="mx-4 mb-4">
-            <router-view/>
+        <!-- 当使用 vue-router 时，建议将你的视图放在 v-main 内。 -->
+        <v-main class="grey lighten-4">
+            <div class="mx-4 mb-4">
+                <router-view/>
+            </div>
         </v-main>
     </v-app>
 </template>
