@@ -17,6 +17,15 @@
         </v-app-bar>
 
         <v-navigation-drawer class="primary" app v-model="drawer">
+            <v-layout column align-center>
+                <v-flex class="mt-5">
+                    <v-avatar size="100">
+                        <img src="/avatar-1.png" alt="">
+                    </v-avatar>
+                    <p class="white--text subtitle-1 mt-1">The Net Ninja</p>
+                </v-flex>
+            </v-layout>
+
             <v-list>
                 <!-- 标记为路由link -->
                 <v-list-item v-for="(link, index) in links" :key="index" link :to="link.route">
