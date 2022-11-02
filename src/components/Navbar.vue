@@ -10,6 +10,33 @@
             </v-toolbar-title>
             <!-- 占位 -->
             <v-spacer></v-spacer>
+
+            <!-- dropdown menu -->
+            <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        text
+                        color="grey"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        <v-icon left>mdi-chevron-down</v-icon>
+                        <span>Menu</span>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item
+                        v-for="(link, index) in links"
+                        :key="index"
+                        color="primary"
+                        link
+                        :to="link.route"
+                    >
+                        <v-list-item-title>{{ link.text }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+
             <v-btn text color="grey">
                 <span>Sign Out</span>
                 <v-icon right>mdi-exit-to-app</v-icon>
