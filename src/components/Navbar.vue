@@ -51,6 +51,9 @@
                     </v-avatar>
                     <p class="white--text subtitle-1 mt-1">The Net Ninja</p>
                 </v-flex>
+                <v-flex class="mt-4 mb-3">
+                    <Popup></Popup>
+                </v-flex>
             </v-layout>
 
             <v-list>
@@ -70,8 +73,11 @@
 </template>
 
 <script>
+import Popup from '@/components/Popup'
+
 export default {
     name: 'Navbar',
+    components: { Popup },
     data() {
         return {
             drawer: false,
