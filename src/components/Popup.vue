@@ -1,5 +1,5 @@
 <template>
-    <v-dialog max-width="600">
+    <v-dialog max-width="600" v-model="dialog">
         <template v-slot:activator="{ on, attrs }">
             <v-btn
                 text
@@ -45,7 +45,7 @@
                         ></v-date-picker>
                     </v-menu>
 
-                    <v-btn text class="success mt-3" @click="submit">Add project</v-btn>
+                    <v-btn depressed class="success mt-3" :loading="loading" :disabled="loading" @click="submit">Add project</v-btn>
                 </v-form>
             </v-card-text>
         </v-card>
@@ -68,13 +68,23 @@ export default {
             ],
             dateRules: [
                 v => !!v || 'Date is required',
-            ]
+            ],
+            loading: false,
+            dialog: false
         }
     },
     methods: {
         submit() {
             if (this.$refs.myForm.validate()) {
                 console.log(this.title, this.content)
+                this.loading = true;
+
+                setTimeout(() => {
+                    this.loading = false;
+                    this.dialog = false;
+                    // 发送方
+                    this.$emit('projectAdded');
+                }, 2000);
             }
         }
     },
@@ -82,6 +92,9 @@ export default {
         formattedDate() {
             return this.due ? format(parseISO(this.due), 'Do MMM yyyy') : '';
         }
+    },
+    beforeDestroy() {
+        console.log('Destroyed!!!');
     }
 }
 </script>

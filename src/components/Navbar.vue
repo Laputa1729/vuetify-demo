@@ -1,5 +1,21 @@
 <template>
     <nav>
+
+        <!-- 消息条 -->
+        <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
+            <span>Awesome! You added a new project.</span>
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="white"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                >
+                    Close
+                </v-btn>
+            </template>
+        </v-snackbar>
+
         <!-- App bars（应用栏） -->
         <!-- app属性用于围绕<v-main>动态调整布局，注意：app属性会自动应用position: fixed到布局元素上 -->
         <v-app-bar flat app>
@@ -52,7 +68,7 @@
                     <p class="white--text subtitle-1 mt-1">The Net Ninja</p>
                 </v-flex>
                 <v-flex class="mt-4 mb-3">
-                    <Popup></Popup>
+                    <Popup @projectAdded="snackbar = true"></Popup>
                 </v-flex>
             </v-layout>
 
@@ -86,6 +102,7 @@ export default {
                 { icon: 'mdi-folder', text: 'My Projects', route: '/projects' },
                 { icon: 'mdi-account', text: 'Team', route: '/team' },
             ],
+            snackbar: false
         }
     },
 }
