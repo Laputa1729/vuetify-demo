@@ -83,6 +83,16 @@ export default {
         sortBy(mode) {
             this.projects.sort((a, b) => a[mode] < b[mode] ? -1 : 1);
         }
+    },
+    mounted() {
+        // 接收方
+        this.$bus.$on('hello', (data) => {
+            this.projects.push(data);
+        });
+    },
+    beforeDestroy() {
+        // 解绑自定义事件，因为Vue.prototype.$bus永远存在，所有要手动解绑
+        this.$bus.$off('hello');
     }
 }
 </script>

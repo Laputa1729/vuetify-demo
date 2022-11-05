@@ -76,14 +76,25 @@ export default {
     methods: {
         submit() {
             if (this.$refs.myForm.validate()) {
-                console.log(this.title, this.content)
                 this.loading = true;
 
                 setTimeout(() => {
                     this.loading = false;
                     this.dialog = false;
+
+                    let newProject = {
+                        title: this.title,
+                        person: 'Myself',
+                        due: this.formattedDate,
+                        status: 'ongoing',
+                        content: this.content
+                    };
+
+                    console.log(newProject);
+
                     // 发送方
                     this.$emit('projectAdded');
+                    this.$bus.$emit('hello', newProject);
                 }, 2000);
             }
         }
