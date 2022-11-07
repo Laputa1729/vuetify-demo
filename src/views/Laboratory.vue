@@ -9,7 +9,7 @@
                         <v-btn color="error" class="text-none" @click="nClickCount++">Normal Click</v-btn>
                     </v-col>
                     <v-col cols="12" sm="6" class="text-center">
-                        <v-btn color="primary" class="text-none" @click="debounceClickFn(111, $event)">Debounce Click(500ms)</v-btn>
+                        <v-btn color="primary" class="text-none" @click="dClickFn(111, $event)">Debounce Click(500ms)</v-btn>
                     </v-col>
                 </v-row>
                 <v-row class="ma-0">
@@ -24,16 +24,20 @@
                 <v-row class="ma-0">
                     <v-col cols="12" sm="6" class="text-center">
                         <h2 class="mb-3">Normal Input</h2>
-                        <input type="text" placeholder="" v-model="normalInputValue">
-                        <p class="mt-4 mb-0">{{ normalInputValue || '--' }}</p>
+                        <input type="text" placeholder="" v-model="nInputValue">
+                        <p class="mt-4 mb-0">{{ nInputValue || '--' }}</p>
                     </v-col>
                     <v-col cols="12" sm="6" class="text-center">
                         <h2 class="mb-3">Debounce Input(500ms)</h2>
-                        <input type="text" placeholder="" v-model="debounceInputValue" @input="debounceInputFn">
+                        <input type="text" placeholder="" v-model="dInputValue" @input="dInputFn">
                         <p class="mt-4 mb-0">{{ finalInputValue || '--' }}</p>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
+                <div class="text-center mt-6">
+                    <p v-for="(item, index) in 10" :key="index">Hello World!</p>
+                    <div v-html="appendedHtml"></div>
+                </div>
             </div>
         </v-container>
     </div>
@@ -41,6 +45,7 @@
 
 <script>
 import debounce from '@/utils/debounce'
+import throttle from '@/utils/throttle'
 
 export default {
     name: 'Laboratory',
@@ -48,21 +53,33 @@ export default {
         return {
             nClickCount: 0,
             dClickCount: 0,
-            normalInputValue: '',
-            debounceInputValue: '',
+            nInputValue: '',
+            dInputValue: '',
             finalInputValue: '',
+            appendedHtml: '',
         }
     },
     methods: {
-        debounceClickFn: debounce(function (x, e) {
+        dClickFn: debounce(function (x, e) {
             console.log(arguments);
             this.dClickCount++;
         }, 1000),
-        debounceInputFn: debounce(function () {
+
+        dInputFn: debounce(function () {
             console.log(arguments);
-            this.finalInputValue = this.debounceInputValue;
+            this.finalInputValue = this.dInputValue;
         }, 1000),
-    }
+
+        scrollFn: throttle(function () {
+            this.appendedHtml += `<p class="red">New Html...${ new Date().getTime() }</p>`;
+        }, 2000)
+    },
+    mounted() {
+        window.addEventListener('scroll', this.scrollFn, true);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.scrollFn, true);
+    },
 }
 </script>
 
