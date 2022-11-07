@@ -1,14 +1,15 @@
 // 防抖
 const debounce = (fn, delay) => {
-    let timeoutId;
+    delay = delay || 200;
+    let timer;
 
     return function (...args) {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
+        if (timer) {
+            clearTimeout(timer);
         }
 
-        timeoutId = setTimeout(() => {
-            fn(...args);
+        timer = setTimeout(() => {
+            fn.apply(this, args);  // 判断上下文，apply改变this的指向，使之指向它的调用者
         }, delay);
     }
 }
